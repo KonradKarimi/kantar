@@ -1,11 +1,7 @@
-import argparse
 import http.server
+import json
 import logging
 import urllib.parse
-import json
-
-SORT_SERVER_DEFAULT_PORT = 8080
-SORT_SERVER_DEFAULT_HOST = 'localhost'
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=logging.INFO)
 
@@ -38,7 +34,7 @@ def reverse_sort_numbers(nums):
     return list(reversed(nums))
 
 
-class SortService(http.server.BaseHTTPRequestHandler):
+class SortHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             url_parts = urllib.parse.urlparse(self.path)
@@ -71,15 +67,3 @@ class SortService(http.server.BaseHTTPRequestHandler):
             logging.error(e)
             self.send_response(500)
             self.end_headers()
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Sort Service')
-    parser.add_argument('--host', default=SORT_SERVER_DEFAULT_HOST, help='server hostname')
-    parser.add_argument('--port', type=int, default=SORT_SERVER_DEFAULT_PORT, help='server port')
-
-    args = parser.parse_args()
-
-    logging.info(f'starting server on {args.host}:{args.port}...')
-    httpd = http.server.HTTPServer((args.host, args.port), SortService)
-    httpd.serve_forever()

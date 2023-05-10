@@ -4,7 +4,7 @@ import threading
 import urllib.request
 import json
 
-from server import SortService
+from sort_service.sort_handler import SortService
 
 
 class TestSortService(unittest.TestCase):
