@@ -1,1 +1,6 @@
-requests
+requests~=2.30.0
+uvicorn~=0.22.0
+asyncio~=3.4.3
+asynctest~=0.13.0
+urllib3==1.26.6 #Needs to be pinned to avoid conflicts with requests https://stackoverflow.com/questions/76187256/importerror-urllib3-v2-0-only-supports-openssl-1-1-1-currently-the-ssl-modu
+

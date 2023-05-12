@@ -1,28 +1,47 @@
-import argparse
-import http.server
-import logging
+import asyncio
+import uvicorn
 
-from sort_service.sort_handler import SortHandler
-
-SORT_SERVER_DEFAULT_PORT = 8080
-SORT_SERVER_DEFAULT_HOST = 'localhost'
+from service.request_handler import handle_request
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Sort Service')
-    parser.add_argument('--host', default=SORT_SERVER_DEFAULT_HOST, help='server hostname')
-    parser.add_argument('--port', type=int, default=SORT_SERVER_DEFAULT_PORT, help='server port')
+async def read_body(receive):
+    """
+    Read and return the entire body from an incoming ASGI message.
+    """
+    body = b''
+    more_body = True
 
-    args = parser.parse_args()
+    while more_body:
+        message = await receive()
+        body += message.get('body', b'')
+        more_body = message.get('more_body', False)
 
-    logging.info(f'starting server on {args.host}:{args.port}...')
-    httpd = http.server.HTTPServer((args.host, args.port), SortHandler)
+    return body
 
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        logging.info('stopping server...')
+
+async def app(scope, receive, send):
+    """
+    This is the entry point for the ASGI server.
+    :param scope: dictionary containing information about the connection
+    :param receive: channel for receiving messages
+    :param send: channel for sending messages
+    :return: None
+    """
+    assert scope['type'] == 'http'
+    request_method = scope['method']
+    request_path = scope['path']
+    query_string = scope['query_string']
+    body = await read_body(receive)
+
+    # Handle the request (see sort_service/request_handler.py)
+    await handle_request(request_method, request_path, query=query_string, body=body).send_response(send)
+
+
+async def main():
+    config = uvicorn.Config(app="main:app", port=8000, log_level="trace")
+    server = uvicorn.Server(config)
+    await server.serve()
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
