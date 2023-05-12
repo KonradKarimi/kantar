@@ -1,8 +1,11 @@
 # ABOUT
-Aptitude Test (Kantar) 
+
+Aptitude Test (Kantar)
 
 # HOW TO USE
+
 To use this project, follow these steps:
+
 1. Clone the repository
 2. Make sure python is installed on your machine (tested on python 3.9)
 3. `cd` into the repository
@@ -10,8 +13,9 @@ To use this project, follow these steps:
     ```
     pip install -r requirements.txt
     ```
-   
+
 ## To start the server:
+
 1. Run the following command in the terminal:
     ```
     python main.py
@@ -19,18 +23,18 @@ To use this project, follow these steps:
 2. The server will start on port default port 8000
 
 ## Client application:
-1. Run the following example command in the terminal:
-    ```
-    python client.py sort 10 5 18 35 4 78
-    ```
+
+1. `cd` into the client folder
 2. Run the following example command in the terminal:
     ```
-    python client.py reverse 178 35 18 10 5 4  
+    python simple_client.py sort 10 5 18 35 4 78
+    ```
+3. Run the following example command in the terminal:
+    ```
+    python simple_client.py reverse 178 35 18 10 5 4  
     ```
 
 # KNOWN ISSUES
-- fast and dirty implementation
-- no folder structure as for now
-- lack of proper tests
+- lack tests for simple client application
 - no docker as for now
 
