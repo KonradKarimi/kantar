@@ -67,5 +67,4 @@ To use this project, follow these steps:
 # KNOWN ISSUES
 
 - lack tests for simple client application
-- no docker as for now
 

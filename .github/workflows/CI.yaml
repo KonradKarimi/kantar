@@ -1,0 +1,27 @@
+name: Verify Commit
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull changes
+      - uses: actions/checkout@v2
+      - name: Get python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Update pip
+        run: python -m pip install --upgrade pip
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Execute tests
+        run: |
+          python -m unittest tests/test_*.py
+
+
+
+
