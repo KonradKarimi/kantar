@@ -38,7 +38,7 @@ async def app(scope, receive, send):
 
 
 async def main():
-    config = uvicorn.Config(app="main:app", port=8000, log_level="trace")
+    config = uvicorn.Config(app="main:app", port=8000, log_level="info")
     server = uvicorn.Server(config)
     await server.serve()
 
