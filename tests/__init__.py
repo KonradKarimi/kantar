@@ -1,1 +1,1 @@
-__all__ = ["test_server", "test_sort_functions.py"]
+__all__ = ["test_server", "test_sort_functions"]

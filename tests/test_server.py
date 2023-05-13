@@ -60,3 +60,17 @@ class TestServerConnection(asynctest.TestCase):
         response = requests.post("http://localhost:8000/sort", data="[1.1 2.2 3.3]")
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), {'Error': 'Only list of integers is allowed'})
+
+    async def main(self):
+        await self.test_connect()
+        await self.test_invalid_path()
+        await self.test_unavailable_method()
+        await self.test_invalid_query()
+        await self.test_empty_query()
+        await self.test_empty_body()
+        await self.test_float_numbers()
+
+
+if __name__ == '__main__':
+    server_tests = TestServerConnection()
+    asynctest.main()
