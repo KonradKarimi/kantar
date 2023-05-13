@@ -16,6 +16,24 @@ To use this project, follow these steps:
 
 ## To start the server:
 
+### Using docker:
+
+1. `cd` into the repository
+2. Run the following command in the terminal for development environment:
+    ```
+    docker-compose -f ./docker-compose-dev.yaml -p kantar_sort up -d 
+    ```
+    1. Run the following command in the terminal for production environment:
+    ```
+    docker-compose -f ./docker-compose-prod.yaml -p kantar_sort up -d 
+    ```
+3. To stop the server run the following command in the terminal:
+    ```
+    docker-compose -f ./docker-compose-dev.yaml -p kantar_sort down
+    ```
+
+### Manually (without docker):
+
 1. Run the following command in the terminal:
     ```
     python main.py
